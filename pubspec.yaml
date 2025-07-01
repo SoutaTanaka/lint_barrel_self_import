@@ -1,6 +1,6 @@
 name: lint_barrel_self_import
 description: A custom lint rule to avoid importing a package's own barrel file from within that package.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/SoutaTanaka/lint_barrel_self_import
 
 environment:
