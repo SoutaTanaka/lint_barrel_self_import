@@ -5,12 +5,15 @@ import 'package:path/path.dart' as path;
 
 /// A lint rule that detects imports of a package's own barrel file.
 class AvoidSelfBarrelImportRule extends DartLintRule {
+  /// Creates a new instance of [AvoidSelfBarrelImportRule].
   const AvoidSelfBarrelImportRule() : super(code: _code);
 
   static const _code = LintCode(
     name: 'avoid_self_barrel_import',
-    problemMessage: 'Avoid importing the package\'s own barrel file from within the package.',
-    correctionMessage: 'Import specific files directly instead of using the barrel file.',
+    problemMessage: "Avoid importing the package's own barrel file from "
+        'within the package.',
+    correctionMessage:
+        'Import specific files directly instead of using the barrel file.',
     errorSeverity: ErrorSeverity.WARNING,
   );
 
@@ -43,17 +46,19 @@ class AvoidSelfBarrelImportRule extends DartLintRule {
           // Get the current file path
           final currentFilePath = resolver.source.fullName;
           final currentDir = path.dirname(currentFilePath);
-          
+
           // Resolve the relative import to an absolute path
-          final resolvedPath = path.normalize(path.join(currentDir, importUri));
-          
+          final resolvedPath =
+              path.normalize(path.join(currentDir, importUri));
+
           // Get the package root directory (assuming lib directory structure)
           final packageRoot = _findPackageRoot(currentFilePath);
           if (packageRoot == null) return;
-          
+
           // Check if the resolved path points to the barrel file
-          final expectedBarrelPath = path.join(packageRoot, 'lib', barrelFileName);
-          
+          final expectedBarrelPath =
+              path.join(packageRoot, 'lib', barrelFileName);
+
           if (path.equals(resolvedPath, expectedBarrelPath)) {
             reporter.atNode(node, _code);
           }
@@ -68,7 +73,7 @@ class AvoidSelfBarrelImportRule extends DartLintRule {
   /// Finds the package root directory by looking for pubspec.yaml
   String? _findPackageRoot(String filePath) {
     var current = path.dirname(filePath);
-    
+
     while (current != path.dirname(current)) {
       final pubspecPath = path.join(current, 'pubspec.yaml');
       if (path.isAbsolute(pubspecPath)) {
@@ -88,7 +93,7 @@ class AvoidSelfBarrelImportRule extends DartLintRule {
       }
       current = path.dirname(current);
     }
-    
+
     return null;
   }
-} 
+}

@@ -7,7 +7,7 @@ void main() {
     late AvoidSelfBarrelImportRule rule;
 
     setUp(() {
-      rule = AvoidSelfBarrelImportRule();
+      rule = const AvoidSelfBarrelImportRule();
     });
 
     test('should have correct rule code', () {
@@ -16,18 +16,20 @@ void main() {
     });
 
     test('should detect package import of barrel file', () async {
-      // This test would need to be implemented with custom_lint testing utilities
-      // For now, we'll test the rule creation and basic properties
+      // This test would need to be implemented with custom_lint testing
+      // utilities. For now, we'll test the rule creation and basic properties
       expect(rule, isA<DartLintRule>());
     });
 
     test('should detect relative import of barrel file', () async {
-      // This test would need to be implemented with custom_lint testing utilities
+      // This test would need to be implemented with custom_lint testing
+      // utilities
       expect(rule, isA<DartLintRule>());
     });
 
     test('should not trigger on valid imports', () async {
-      // This test would need to be implemented with custom_lint testing utilities
+      // This test would need to be implemented with custom_lint testing
+      // utilities
       expect(rule, isA<DartLintRule>());
     });
   });
