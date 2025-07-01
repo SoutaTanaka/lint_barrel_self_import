@@ -15,7 +15,10 @@ void main() {
     test('should have correct rule code', () {
       expect(rule.code.name, equals('avoid_self_barrel_import'));
       expect(rule.code.problemMessage, contains('barrel file'));
-      expect(rule.code.correctionMessage, contains('Import specific files directly'));
+      expect(
+        rule.code.correctionMessage,
+        contains('Import specific files directly'),
+      );
       expect(rule.code.errorSeverity, equals(ErrorSeverity.WARNING));
     });
 
@@ -40,36 +43,82 @@ void main() {
     });
 
     group('integration tests with expect_lint comments', () {
-      test('fixture files should exist and have proper expect_lint comments', () {
-        final badImportPackageFile = File('test/fixtures/test_package/lib/src/bad_import_package.dart');
-        final badImportRelativeFile = File('test/fixtures/test_package/lib/src/bad_import_relative.dart');
-        final goodImportFile = File('test/fixtures/test_package/lib/src/good_import.dart');
+      test(
+        'fixture files should exist and have proper expect_lint comments',
+        () {
+        final badImportPackageFile = File(
+          'test/fixtures/test_package/lib/src/bad_import_package.dart',
+        );
+        final badImportRelativeFile = File(
+          'test/fixtures/test_package/lib/src/bad_import_relative.dart',
+        );
+        final goodImportFile = File(
+          'test/fixtures/test_package/lib/src/good_import.dart',
+        );
 
-        expect(badImportPackageFile.existsSync(), isTrue, reason: 'bad_import_package.dart should exist');
-        expect(badImportRelativeFile.existsSync(), isTrue, reason: 'bad_import_relative.dart should exist');
-        expect(goodImportFile.existsSync(), isTrue, reason: 'good_import.dart should exist');
+        expect(
+          badImportPackageFile.existsSync(),
+          isTrue,
+          reason: 'bad_import_package.dart should exist',
+        );
+        expect(
+          badImportRelativeFile.existsSync(),
+          isTrue,
+          reason: 'bad_import_relative.dart should exist',
+        );
+        expect(
+          goodImportFile.existsSync(),
+          isTrue,
+          reason: 'good_import.dart should exist',
+        );
 
         // Check that expect_lint comments are properly placed
         final badPackageContent = badImportPackageFile.readAsStringSync();
         final badRelativeContent = badImportRelativeFile.readAsStringSync();
         final goodContent = goodImportFile.readAsStringSync();
 
-        expect(badPackageContent, contains('expect_lint: avoid_self_barrel_import'));
-        expect(badRelativeContent, contains('expect_lint: avoid_self_barrel_import'));
-        expect(goodContent, isNot(contains('expect_lint')), reason: 'Good import file should not have expect_lint comments');
+        expect(
+          badPackageContent,
+          contains('expect_lint: avoid_self_barrel_import'),
+        );
+        expect(
+          badRelativeContent,
+          contains('expect_lint: avoid_self_barrel_import'),
+        );
+        expect(
+          goodContent,
+          isNot(contains('expect_lint')),
+          reason: 'Good import file should not have expect_lint comments',
+        );
 
         // Verify the imports are as expected
-        expect(badPackageContent, contains('package:test_package/test_package.dart'));
-        expect(badRelativeContent, contains('package:test_package/test_package.dart'));
+        expect(
+          badPackageContent,
+          contains('package:test_package/test_package.dart'),
+        );
+        expect(
+          badRelativeContent,
+          contains('package:test_package/test_package.dart'),
+        );
         expect(goodContent, contains('package:test_package/src/'));
       });
 
       test('barrel file should exist', () {
-        final barrelFile = File('test/fixtures/test_package/lib/test_package.dart');
-        expect(barrelFile.existsSync(), isTrue, reason: 'Barrel file should exist');
+        final barrelFile = File(
+          'test/fixtures/test_package/lib/test_package.dart',
+        );
+        expect(
+          barrelFile.existsSync(),
+          isTrue,
+          reason: 'Barrel file should exist',
+        );
 
         final content = barrelFile.readAsStringSync();
-        expect(content, contains('export'), reason: 'Barrel file should contain export statements');
+        expect(
+          content,
+          contains('export'),
+          reason: 'Barrel file should contain export statements',
+        );
       });
     });
 
@@ -91,8 +140,12 @@ void main() {
       });
 
       test('source files should have expected classes', () {
-        final someClassFile = File('test/fixtures/test_package/lib/src/some_class.dart');
-        final anotherClassFile = File('test/fixtures/test_package/lib/src/another_class.dart');
+        final someClassFile = File(
+          'test/fixtures/test_package/lib/src/some_class.dart',
+        );
+        final anotherClassFile = File(
+          'test/fixtures/test_package/lib/src/another_class.dart',
+        );
 
         expect(someClassFile.existsSync(), isTrue);
         expect(anotherClassFile.existsSync(), isTrue);
@@ -102,17 +155,6 @@ void main() {
 
         expect(someClassContent, contains('class SomeClass'));
         expect(anotherClassContent, contains('class AnotherClass'));
-      });
-    });
-
-    group('edge cases', () {
-      test('should handle files gracefully', () {
-        // These tests verify that the test infrastructure works
-        // The actual lint detection is validated through expect_lint comments
-        // when running `dart run custom_lint` on the test fixtures
-
-        expect(() => rule.code, returnsNormally);
-        expect(rule.code.name, isA<String>());
       });
     });
   });
