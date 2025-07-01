@@ -1,0 +1,16 @@
+name: example
+description: Example usage of lint_barrel_self_import
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  # Using path dependency for development
+  lint_barrel_self_import:
+    path: ../
+
+dev_dependencies:
+  custom_lint: ^0.6.4
+  lints: ^3.0.0 

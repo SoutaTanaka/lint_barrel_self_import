@@ -1,0 +1,16 @@
+name: lint_barrel_self_import
+description: A custom lint rule to avoid importing a package's own barrel file from within that package.
+version: 0.1.0
+repository: https://github.com/your_username/lint_barrel_self_import
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  analyzer: ^6.4.1
+  custom_lint_builder: ^0.6.4
+  path: ^1.9.0
+
+dev_dependencies:
+  test: ^1.24.0
+  very_good_analysis: ^6.0.0
